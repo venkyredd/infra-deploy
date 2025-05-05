@@ -35,7 +35,7 @@ jobs:
           terraform_version: 1.3.8
 
       - name: Terraform Init
-        working-directory: i-p
+        working-directory: infra
         run: |
           terraform init \
             -backend-config="bucket=${{ env.STATE_BUCKET }}" \
@@ -44,17 +44,17 @@ jobs:
             -backend-config="dynamodb_table=${{ env.LOCK_TABLE }}"
 
       - name: Terraform Validate
-        working-directory: i-p
+        working-directory: infra
         run: terraform validate
 
       - name: Terraform Plan
-        working-directory: i-p
+        working-directory: infra
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
-        working-directory: i-p
+        working-directory: infra
         run: terraform apply -auto-approve tfplan
 
       - name: Show Outputs
-        working-directory: i-p
+        working-directory: infra
         run: terraform output
